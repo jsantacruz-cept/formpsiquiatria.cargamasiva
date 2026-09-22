@@ -460,18 +460,18 @@ async function generatePdf() {
     };
 
     // Datos de la contingencia
-    draw(document.getElementById('artEaMutual').value, 125, 124.8, 9);
-    draw(document.getElementById('siniestro').value, 393, 124.8, 9);
+    draw(document.getElementById('artEaMutual').value, 125, 122.3, 9);
+    draw(document.getElementById('siniestro').value, 393, 122.3, 9);
 
     // Datos del trabajador
-    draw(document.getElementById('nombre').value, 145, 177.6, 9);
-    draw(document.getElementById('dni').value, 105, 201.6, 9);
-    draw(document.getElementById('edad').value, 498, 201.6, 9);
-    draw(document.getElementById('ocupacion').value, 109, 225.6, 9);
+    draw(document.getElementById('nombre').value, 145, 175.1, 9);
+    draw(document.getElementById('dni').value, 105, 199.1, 9);
+    draw(document.getElementById('edad').value, 498, 199.1, 9);
+    draw(document.getElementById('ocupacion').value, 109, 223.1, 9);
 
     // Descripcion del cuadro (hasta 8 lineas)
     const descLines = wrapTextByWidth(document.getElementById('descripcion').value, font, 9, 505).slice(0, 8);
-    const descTops = [290.3, 314.3, 338.3, 362.3, 386.3, 410.3, 434.3, 458.3];
+    const descTops = [287.8, 311.8, 335.8, 359.8, 383.8, 407.8, 431.8, 455.8];
     descLines.forEach((line, i) => draw(line, 58, descTops[i], 9));
 
     // Modalidad
@@ -483,7 +483,7 @@ async function generatePdf() {
     }
 
     // Bloque terapeutico: cantidad de sesiones + frecuencia
-    draw(document.getElementById('cantSesiones').value, 58, 557.7, 9);
+    draw(document.getElementById('cantSesiones').value, 58, 555.2, 9);
     const frecuencia = document.querySelector('input[name="frecuencia"]:checked');
     if (frecuencia) {
       const coords = { semanal: [251.9, 553.9], quincenal: [367.4, 553.9], mensual: [478.8, 553.9] };
@@ -492,17 +492,18 @@ async function generatePdf() {
     }
 
     // Esquema farmacologico (5 lineas)
-    const medTops = [618.7, 642.7, 666.7, 690.7, 714.7];
+    const medTops = [616.2, 640.2, 664.2, 688.2, 712.2];
     for (let i = 1; i <= 5; i++) {
       draw(document.getElementById('med' + i).value, 66, medTops[i - 1], 9);
     }
 
     // Lugar y fecha
-    draw(document.getElementById('lugarFecha').value, 58, 750.7, 9);
+    draw(document.getElementById('lugarFecha').value, 58, 748.2, 9);
 
     // Firma (imagen) + nombre y matricula (texto), lado a lado
     const sigFileInput = document.getElementById('sigFile');
-    const lineBottom = 750.7;
+    const lineBottom = 748.2;
+    const lineBottomImage = 743.0;
     if (sigFileInput.files && sigFileInput.files[0]) {
       const file = sigFileInput.files[0];
       const arrBuf = await file.arrayBuffer();
@@ -517,7 +518,7 @@ async function generatePdf() {
       const w = embedded.width * scale;
       const h = embedded.height * scale;
       const x = 306 + (boxW - w) / 2;
-      page.drawImage(embedded, { x, y: H - lineBottom, width: w, height: h });
+      page.drawImage(embedded, { x, y: H - lineBottomImage, width: w, height: h });
     }
 
     const sigText = document.getElementById('sigNombreMatricula').value;
